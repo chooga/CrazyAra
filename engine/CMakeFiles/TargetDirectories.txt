@@ -1,0 +1,3 @@
+/home/chooga/uni/AtariAra/CrazyAra/engine/CMakeFiles/rebuild_cache.dir
+/home/chooga/uni/AtariAra/CrazyAra/engine/CMakeFiles/edit_cache.dir
+/home/chooga/uni/AtariAra/CrazyAra/engine/CMakeFiles/AtariAra.dir

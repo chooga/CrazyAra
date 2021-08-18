@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
+
 set (CMAKE_CXX_STANDARD 17)
 
 option(USE_PROFILING             "Build with profiling"   OFF)
@@ -10,8 +11,9 @@ option(BACKEND_TORCH             "Build with Torch backend (CPU/GPU) support" OF
 option(USE_960                   "Build with 960 variant support"  OFF)
 option(BUILD_TESTS               "Build and run tests"  OFF)
 option(USE_DYNAMIC_NN_ARCH       "Build with dynamic neural network architektur support"  OFF)
-# enable a single mode for different model input / outputs
-option(MODE_CRAZYHOUSE           "Build with crazyhouse only support"  ON)
+# enable a single mode for different model input / outputs#
+option(MODE_ATARI		 "Build with Atari Learning Environment support" ON)
+option(MODE_CRAZYHOUSE           "Build with crazyhouse only support"  OFF)
 option(MODE_CHESS                "Build with chess + chess960 only support"  OFF)
 option(MODE_LICHESS              "Build with lichess variants support"  OFF)
 option(MODE_OPEN_SPIEL           "Build with open_spiel environment support"  OFF)
@@ -21,6 +23,12 @@ option(SEARCH_UCT                "Build with UCT instead of PUCT search"  OFF)
 
 
 add_definitions(-DIS_64BIT)
+
+if (MODE_ATARI)
+    project(AtariAra CXX)
+    add_definitions(-DMODE_ATARI)
+#    add_definitions(-DACTION_64_BIT)
+endif()
 
 if (MODE_CRAZYHOUSE)
     project(CrazyAra CXX)
@@ -104,6 +112,10 @@ if( blaze_FOUND )
      target_link_libraries( blaze_target INTERFACE blaze::blaze )
 endif()
 
+if( MODE_ATARI )
+	find_package(ale REQUIRED)
+endif()
+
 if (SEARCH_UCT)
     add_definitions(-DSEARCH_UCT)
 endif()
@@ -143,6 +155,13 @@ file(GLOB_RECURSE CPP_PACKAGE_HEADERS
 
 find_package (Threads)
 
+if (MODE_ATARI)
+    include_directories("src/environment/atari")
+    include_directories("3rdparty/ALE/src")
+    include_directories("3rdparty/ALE/src/environment")
+    include_directories("3rdparty/ALE/src/games")
+endif ()
+
 if (MODE_XIANGQI)
     include_directories("3rdparty/Fairy-Stockfish/src")
 else ()
@@ -163,6 +182,16 @@ file(GLOB sf_related_files
     "3rdparty/Stockfish/src/bitboard.cpp"
     "3rdparty/Stockfish/src/*.cpp"
     )
+file(GLOB atari_related_file
+    "src/environments/atari/*.h"
+    "src/environments/atari/*.cpp"
+    "3rdparty/ALE/src/ale_interface.hpp"
+    "3rdparty/ALE/src/ale_interface.cpp"
+    "3rdparty/ALE/src/games/RomSettings.cpp"
+    "3rdparty/ALE/src/games/RomSettings.hpp"
+    "3rdparty/ALE/src/environment/ale_state.cpp"
+    "3rdparty/ALE/src/environment/ale_state.hpp"
+)
 file(GLOB uci_files
     "src/uci/*.h"
     "src/uci/*.cpp"
@@ -193,6 +222,12 @@ list(REMOVE_ITEM fsf_related_files ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/Fairy-St
 list(REMOVE_ITEM fsf_related_files ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/Fairy-Stockfish/src/pyffish.cpp)
 list(REMOVE_ITEM fsf_related_files ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/Fairy-Stockfish/src/main.cpp)
 
+if (MODE_ATARI)
+    set(source_files
+        ${source_files}
+        ${atari_related_file}
+	)
+endif()
 if (NOT MODE_XIANGQI)
     set(source_files
         ${source_files}
@@ -201,7 +236,7 @@ if (NOT MODE_XIANGQI)
         )
 endif ()
 
-if (NOT MODE_OPEN_SPIEL AND NOT MODE_XIANGQI AND NOT MODE_STRATEGO)
+if (NOT MODE_OPEN_SPIEL AND NOT MODE_XIANGQI AND NOT MODE_STRATEGO AND NOT MODE_ATARI)
     set(source_files
         ${source_files}
         ${chess_related_files}
@@ -426,7 +461,9 @@ if (USE_960)
 endif()
 
 add_executable(${PROJECT_NAME} ${source_files})
-
+if( MODE_ATARI )
+	target_link_libraries(${PROJECT_NAME} ale::ale-lib)
+endif()
 if (BACKEND_TENSORRT)
     target_link_libraries(${PROJECT_NAME} nvonnxparser nvinfer cudart myelin ${CUDART_LIB} ${CUBLAS_LIB} ${CUDNN_LIB})
 endif()
