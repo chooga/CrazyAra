@@ -10,10 +10,16 @@ option(BACKEND_MXNET             "Build with MXNet backend (Blas/IntelMKL/CUDA/T
 option(BACKEND_TORCH             "Build with Torch backend (CPU/GPU) support" OFF)
 option(USE_960                   "Build with 960 variant support"  OFF)
 option(BUILD_TESTS               "Build and run tests"  OFF)
+<<<<<<< HEAD
 option(USE_DYNAMIC_NN_ARCH       "Build with dynamic neural network architektur support"  OFF)
 # enable a single mode for different model input / outputs#
 option(MODE_ATARI		 "Build with Atari Learning Environment support" ON)
 option(MODE_CRAZYHOUSE           "Build with crazyhouse only support"  OFF)
+=======
+option(USE_DYNAMIC_NN_ARCH       "Build with dynamic neural network architektur support"  ON)
+# enable a single mode for different model input / outputs
+option(MODE_CRAZYHOUSE           "Build with crazyhouse only support"  ON)
+>>>>>>> e91aeac6ede940c39df72b03a16bdb5741a8ea7f
 option(MODE_CHESS                "Build with chess + chess960 only support"  OFF)
 option(MODE_LICHESS              "Build with lichess variants support"  OFF)
 option(MODE_OPEN_SPIEL           "Build with open_spiel environment support"  OFF)
@@ -446,11 +452,6 @@ if (BACKEND_TENSORRT)
     link_directories("$ENV{CUDA_PATH}/lib64")
     link_directories("$ENV{CUDA_PATH}/lib/x64")
     link_directories("$ENV{TENSORRT_PATH}/lib")
-if(WIN32)
-  find_library(TENSORRT_LIBRARY_MYELIN myelin64_1
-    HINTS  ${TENSORRT_PATH}
-    PATH_SUFFIXES lib lib64 lib/x64)
-endif()
     include_directories("$ENV{TENSORRT_PATH}/include")
     include_directories("$ENV{TENSORRT_PATH}/samples/common/")
     add_definitions(-DTENSORRT)
@@ -465,7 +466,7 @@ if( MODE_ATARI )
 	target_link_libraries(${PROJECT_NAME} ale::ale-lib)
 endif()
 if (BACKEND_TENSORRT)
-    target_link_libraries(${PROJECT_NAME} nvonnxparser nvinfer cudart myelin ${CUDART_LIB} ${CUBLAS_LIB} ${CUDNN_LIB})
+    target_link_libraries(${PROJECT_NAME} nvonnxparser nvinfer cudart ${CUDART_LIB} ${CUBLAS_LIB} ${CUDNN_LIB})
 endif()
 
 if (USE_RL)

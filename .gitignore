@@ -137,3 +137,8 @@ crazyara_lichess_dataset_stats.csv
 
 # avoid pushing datasets
 sf_vs_sf_*.pgn
+
+model/
+
+build-engine-Desktop_Qt_5_12_11_GCC_64bit-Debug/
+build-engine-Desktop_Qt_5_12_11_GCC_64bit-Release/
