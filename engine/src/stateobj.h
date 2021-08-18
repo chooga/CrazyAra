@@ -45,6 +45,8 @@ using blaze::DynamicVector;
 #include "environments/fairy_state/fairyoutputrepresentation.h"
 #elif MODE_STRATEGO
 #include "environments/stratego_related/strategostate.h"
+#elif MODE_ATARI
+#include "environments/atari/ataristate.h"
 #else
 #include "environments/chess_related/boardstate.h"
 #include "environments/chess_related/outputrepresentation.h"
@@ -62,6 +64,9 @@ using blaze::DynamicVector;
 #elif MODE_STRATEGO
     using StateObj = StrategoState;
     using StateConstants = StateConstantsStratego;
+#elif MODE_ATARI
+    using StateObj = AtariState;
+    using StateConstants = StateConstantsAtari;
 #else
     using StateObj = BoardState;
     using StateConstants = StateConstantsBoard;

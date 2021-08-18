@@ -150,7 +150,7 @@ void OptionsUCI::init(OptionsMap &o)
 #else
     o["Simulations"]                   << Option(0, 0, 99999999);
 #endif
-#ifdef MODE_STRATEGO
+#if defined(MODE_STRATEGO) || defined(MODE_ATARI)
    o["Centi_Temperature"]              << Option(99999, 0, 99999);
    o["Centi_Temperature_Decay"]        << Option(100, 0, 100);
    o["Temperature_Moves"]              << Option(0, 0, 99999);
@@ -169,6 +169,8 @@ void OptionsUCI::init(OptionsMap &o)
     o["UCI_Variant"]                   << Option("xiangqi", {"xiangqi", "xiangqi"});
 #elif defined MODE_STRATEGO
     o["UCI_Variant"]                   << Option("stratego", {"stratego", "stratego"});
+#elif defined MODE_ATARI
+    o["UCI_Variant"]                   << Option("atari", {"atari", "atari"});
 #else  // MODE = MODE_CHESS
     o["UCI_Variant"]                   << Option("chess", {"chess", "chess"});
 #endif
@@ -294,6 +296,7 @@ string OptionsUCI::check_uci_variant_input(const string &value, bool *is960) {
 const string OptionsUCI::get_first_variant_with_model()
 {
     vector<string> dirs = get_directory_files("model/");
+    std::cout <<  dirs.at(1) << endl;
     for(string dir : dirs) {
         if (std::find(availableVariants.begin(), availableVariants.end(), dir) != availableVariants.end()) {
             const vector <string> files = get_directory_files("model/" + dir);

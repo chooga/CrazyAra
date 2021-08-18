@@ -31,14 +31,14 @@
 #include "crazyara.h"
 #include "variants.h"
 
-#ifndef BUILD_TESTS
-int main(int argc, char* argv[]) {
-#ifdef XIANGQI
-    variants.init();
-#endif
-    CrazyAra crazyara;
-    crazyara.init();
-    crazyara.welcome();
-    crazyara.uci_loop(argc, argv);
-}
-#endif
+//#ifndef BUILD_TESTS || MODE_ATARI
+//int main(int argc, char* argv[]) {
+//#ifdef XIANGQI
+//    variants.init();
+//#endif
+//    CrazyAra crazyara;
+//    crazyara.init();
+//    crazyara.welcome();
+//    crazyara.uci_loop(argc, argv);
+//}
+//#endif

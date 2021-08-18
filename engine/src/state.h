@@ -35,6 +35,8 @@
 #include <memory>
 #include "version.h"
 
+namespace stateInterface{
+
 typedef uint64_t Key;
 #ifdef ACTION_64_BIT
 typedef int64_t Action;
@@ -46,7 +48,7 @@ typedef unsigned int uint;
 typedef int SideToMove;
 #define FIRST_PLAYER_IDX 0
 const int ACTION_NONE = 0;
-
+}
 enum PolicyType {
     normal,
     classic
@@ -103,7 +105,7 @@ enum ProbeState {
 };
 }
 // -------------------------------------------------------------------------
-
+using namespace stateInterface;
 template<typename T>
 class StateConstantsInterface
 {
