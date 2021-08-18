@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/sharedLibraryInterfaceExample.dir/sharedLibraryInterfaceExample.cpp.o -o sharedLibraryInterfaceExample  -Wl,-rpath,/usr/local/lib /usr/local/lib/libale.a -lstdc++fs /usr/lib/x86_64-linux-gnu/libz.so /usr/local/lib/libSDLmain.a /usr/local/lib/libSDL.so -lpthread 
