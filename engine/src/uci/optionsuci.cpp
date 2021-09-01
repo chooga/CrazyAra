@@ -56,7 +56,7 @@ void OptionsUCI::init(OptionsMap &o)
 #ifdef USE_RL
     o["Batch_Size"]                    << Option(8, 1, 8192);
 #else
-    o["Batch_Size"]                    << Option(16, 1, 8192);
+    o["Batch_Size"]                    << Option(8, 1, 8192);
 #endif
     o["Centi_CPuct_Init"]              << Option(250, 1, 99999);
 #ifdef USE_RL
@@ -123,7 +123,7 @@ void OptionsUCI::init(OptionsMap &o)
     o["Nodes_Limit"]                   << Option(0, 0, 999999999);
 #endif
 #ifdef TENSORRT
-    o["Precision"]                     << Option("float16", {"float32", "float16", "int8"});
+    o["Precision"]                     << Option("float32", {"float32", "float16", "int8"});
 #else
     o["Precision"]                     << Option("int8", {"float32", "int8"});
 #endif

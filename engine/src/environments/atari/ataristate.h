@@ -29,7 +29,7 @@ public:
         return NB_LABELS();  // TODO
     }
     static uint NB_PLAYERS() {
-        return  1;
+        return  2;
     }
      static uint NB_AUXILIARY_OUTPUTS() {
         return 0;
@@ -47,17 +47,21 @@ public:
     }
 };
 
+
 class AtariState : public State
 {
 private:
     //std::unique_ptr<const ale::ALEInterface> spielState;
-    ale::ALEInterface ale;
     float totalReward;
-    uint steps;
+    ale::ALEState aleState;
+    ale::ALEInterface* ale;
+
+
 
 public:
     AtariState();
-    AtariState(const AtariState& atarstate);
+    AtariState(bool );
+    AtariState(const AtariState& ataristate);
     std::vector<stateInterface::Action> legal_actions() const;
     void set(const std::string &fenStr, bool isChess960, int variant);
     void get_state_planes(bool normalize, float *inputPlanes,  Version version) const;
@@ -83,6 +87,9 @@ public:
     AtariState *openBoard() const;
     void init(int variant, bool isChess960) override;
     AtariState *clone() const;
+    void set_screen();
+    static ale::ALEInterface* aleStatic;
+
 };
 
 #endif // ATARISTATE_H

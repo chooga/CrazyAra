@@ -31,10 +31,15 @@
 int main(int argc, char** argv) {
 
     SearchSettings ss;
+    ss.useMCGS = false;
+    ss.multiPV = 1 ;
+    ss.threads = 1;
     SearchLimits sl;
+    sl.nodes = 10;
     PlaySettings ps;
     EvalInfo ei;
     AtariState atariState;
+    atariState.set_screen();
     atariState.init(0, false);
     float customReward;
 
@@ -55,7 +60,6 @@ int main(int argc, char** argv) {
 
 
 
-    cout << "game ended: " << customReward << endl;
     TensorrtAPI nn(0, 1, "../model", "float32");
 //    RawNetAgent rna(&nn,&ps,true);
     vector<unique_ptr<NeuralNetAPI>> netBatches;
@@ -70,6 +74,7 @@ int main(int argc, char** argv) {
         rna.perform_action();
         cout << ei.bestMove << endl;
         atariState.do_action(ei.bestMove);
+//        cout << "NEWEPISODE\n\n\n\n\n" << endl;
     }
 
 //  if (argc < 2) {

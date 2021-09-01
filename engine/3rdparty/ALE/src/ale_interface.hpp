@@ -80,7 +80,7 @@ class ALEInterface {
   // should be ready to play. This is necessary after changing a
   // setting for the setting to take effect. Optionally specify
   // a new ROM to load.
-  void loadROM(fs::path rom_file = {});
+  void loadROM(fs::path rom_file = {}, bool fastload = false);
 
   // Applies an action to the game and returns the reward. It is the
   // user's responsibility to check if the game has ended and reset

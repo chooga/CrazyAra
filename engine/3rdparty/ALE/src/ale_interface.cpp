@@ -117,7 +117,7 @@ ALEInterface::~ALEInterface() {}
 // Loads and initializes a game. After this call the game should be
 // ready to play. Resets the OSystem/Console/Environment/etc. This is
 // necessary after changing a setting.
-void ALEInterface::loadROM(fs::path rom_file) {
+void ALEInterface::loadROM(fs::path rom_file, bool fastload) {
   assert(theOSystem.get());
   if (rom_file.empty()) {
     rom_file = theOSystem->romFile();

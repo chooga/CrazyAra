@@ -111,7 +111,7 @@ void CrazyAra::uci_loop(int argc, char *argv[])
     size_t it = 0;
 
     // this is debug vector which can contain uci commands which will be automatically processed when the executable is launched
-    vector<string> commands = {
+    vector<string> commands = {"isready", "go movetime 1000"
     };
 
     do {

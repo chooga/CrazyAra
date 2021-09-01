@@ -31,7 +31,7 @@
 #include "crazyara.h"
 #include "variants.h"
 
-//#ifndef BUILD_TESTS || MODE_ATARI
+#ifndef BUILD_TESTS
 //int main(int argc, char* argv[]) {
 //#ifdef XIANGQI
 //    variants.init();
@@ -41,4 +41,4 @@
 //    crazyara.welcome();
 //    crazyara.uci_loop(argc, argv);
 //}
-//#endif
+#endif
